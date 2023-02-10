@@ -12,6 +12,8 @@ public class MissileLaunchScr : MonoBehaviour
     private Quaternion lookRotation;
     private Vector3 direction;
 
+    public Vector2 mousePosition;
+
     public int missileCount;
     // Start is called before the first frame update
 
@@ -32,11 +34,16 @@ public class MissileLaunchScr : MonoBehaviour
             {
                 missileCount++;
                 MissileRotation();
-                defMissile.transform.SetParent(null);
+                //defMissile.transform.SetParent(null);
                 GameObject defMissileInstance = Instantiate(defMissile, spawnPoint.position, transform.rotation);
-                //defMissileInstance.GetComponent<Rigidbody2D>().AddForce(transform.right * -range, ForceMode2D.Impulse);
-                defMissileInstance.GetComponent<Rigidbody2D>().AddForce(transform.up * range, ForceMode2D.Impulse);
+                //GameObject defMissileInstance = Instantiate(defMissile, spawnPoint.transform.position, Quaternion.identity);
+
+                defMissileInstance.GetComponent<Rigidbody2D>().AddForce(transform.right * -range, ForceMode2D.Impulse);
+
+                //defMissileInstance.GetComponent<Rigidbody2D>().AddForce(transform.up * range, ForceMode2D.Impulse);
                 // defMissileInstance.GetComponent<Rigidbody2D>().AddForce(transform.forward * range);
+
+                //transform.position = Vector2.MoveTowards(transform.position, mousePosition, range);
                 
                 //spawnPoint.forward
                 
@@ -46,17 +53,46 @@ public class MissileLaunchScr : MonoBehaviour
             }
     }
 
+    // private void MissileRotation()
+    // {
+    //     //Get the Screen positions of the object
+    //      Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
+         
+    //     //  //Get the Screen position of the mouse
+    //     //  Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+    //      mousePosition = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
+         
+    //      //Get the angle between the points
+    //      //float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+    //      float angle = AngleBetweenTwoPoints(positionOnScreen, mousePosition);
+    //      //Ta Daaa
+    //      transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle));
+ 
+        
+
+    //     // Debug.Log("Click");
+
+    //     // Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+    //     // //float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+    //     // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+    //     // Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.back);
+    //     // transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 15f * Time.deltaTime);
+
+        
+    // }
+
     private void MissileRotation()
     {
         //Get the Screen positions of the object
          Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
          
-         //Get the Screen position of the mouse
+        //  //Get the Screen position of the mouse
          Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
          
          //Get the angle between the points
          float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
- 
+
          //Ta Daaa
          transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle));
  
