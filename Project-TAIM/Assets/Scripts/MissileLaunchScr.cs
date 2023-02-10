@@ -48,7 +48,7 @@ public class MissileLaunchScr : MonoBehaviour
                 //spawnPoint.forward
                 
                 Object.Destroy(defMissileInstance, 1.0f);
-                missileCount--;
+                //missileCount--;
                 
             }
     }
@@ -84,24 +84,36 @@ public class MissileLaunchScr : MonoBehaviour
 
     private void MissileRotation()
     {
-        //Get the Screen positions of the object
-         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
+        // //Get the Screen positions of the object
+        //  Vector2 positionOnScreen = Camera.main.WorldToViewportPoint (transform.position);
          
-        //  //Get the Screen position of the mouse
-         Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        // //  //Get the Screen position of the mouse
+        //  Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
          
-         //Get the angle between the points
-         float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
+        //  //Get the angle between the points
+        //  float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
 
-         //Ta Daaa
+        //  //Ta Daaa
+        //  transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle));
+
+        //Mouse Position in the world. It's important to give it some distance from the camera. 
+         //If the screen point is calculated right from the exact position of the camera, then it will
+         //just return the exact same position as the camera, w$$anonymous$$ch is no good.
+         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
+         
+         //Angle between mouse and t$$anonymous$$s object
+         float angle = AngleBetweenPoints(transform.position, mouseWorldPosition);
+         
+         //Ta daa
          transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle));
- 
-        
+     }
+     
+    //  float AngleBetweenPoints(Vector2 a, Vector2 b) {
+    //      return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
+    //  }
 
-        Debug.Log("Click");
-    }
 
-    float AngleBetweenTwoPoints(Vector2 a, Vector2 b) {
+    float AngleBetweenPoints(Vector3 a, Vector3 b) {
             return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
         }
 }
